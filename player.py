@@ -127,11 +127,11 @@ class player():
             print("The available moves are: ", self.moves)
 
             # insert strategy here to replace the user input
-            mvid = int(input("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")) - 1
+            # mvid = int(input("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")) - 1
 
             # random strategy
-            # print("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")
-            # mvid = self.random_strategy(self.moves) - 1
+            print("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")
+            mvid = self.random_strategy(self.moves) - 1
 
             print("You chose card: ", self.moves[mvid])
             self.my_move(mvid, cardset)
@@ -144,11 +144,11 @@ class player():
             print("The available moves are: ", cardset.id2name(self.moves))
 
             # # insert strategy here to replace the user input
-            mvid = int(input("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")) - 1
+            # mvid = int(input("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")) - 1
 
             # random strategy
-            # print("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")
-            # mvid = self.random_strategy(self.moves) - 1
+            print("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")
+            mvid = self.random_strategy(self.moves) - 1
 
             print("You chose card: ", cardset.id2name(self.moves[mvid]))
             self.my_move(mvid, cardset)
@@ -180,7 +180,9 @@ class player():
         print("Known table cards: ", cardset.id2name(self.cards.ktc()))
         print("Unknown table cards: ", ["*" for c in self.cards.utc()])       
 
+    def random_strategy(self, mvs:List[List[int]]) -> int:
 
+        return random.randint(1,len(mvs))
 
 
 if __name__ == '__main__':
