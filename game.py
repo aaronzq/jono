@@ -25,7 +25,7 @@ class gameplay():
         self.current_card_id = 0
 
     def step(self):
-        
+        # time.sleep(1)
         if self.playing_player_id==0:
             print("-----------------------------------------")
             self.p1.view_card(self.poker_card)
@@ -180,6 +180,8 @@ if __name__ == '__main__':
 
     game = gameplay()
     iteration = 0
+    print()
+    print("GAME START!")
     while True:
         time.sleep(2)
         print("***************************************************************")
