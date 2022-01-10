@@ -20,3 +20,12 @@ With these codes we wanna try to find the flaws in the game balance. Hopefulling
 功能牌，又比上一家出牌要小，那你就要回收场上所有的牌，如规则3。
 5. 所有的手牌和桌面上的明牌，在出牌时数量和花色都不重要，比如说上家出了一个黑桃4，你可以一起出方片4和梅花4，或者说上家出了两张，你可以接一张。
 6. 在获胜之前，也就是打出最后一张牌时，你不能打出功能牌。如果最后一张是功能牌，那你就需要收回场上所有的牌，然后如规则3。
+
+## Codes
+
+The codes are currently implemented in Python 3.7.
+
+Run
+`
+python game.py
+`
