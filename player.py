@@ -1,6 +1,7 @@
 from cardset import card_in_player, cardset
 from typing import List, Tuple
 from enum import Enum
+import random
 
 class move_type(Enum):
     UNKNOWN_TABLE_CARDS = 1
@@ -20,19 +21,29 @@ class player():
         candidate_cards = dict()
         moves = []
         if self.cards.have_hc():
-            for c in self.cards.hc():
-                if cardset.card_lut[last_card_id] == 998:
-                    if cardset.card_lut[c] < 9 or cardset.card_lut[c] >= 996:
-                        if cardset.card_lut[c] in candidate_cards.keys():
-                            candidate_cards[cardset.card_lut[c]] = candidate_cards[cardset.card_lut[c]] + [c]
-                        else:
+            if (not self.cards.have_utc()) and (len(self.cards.hc())==1):
+                for c in self.cards.hc():
+                    if cardset.card_lut[last_card_id] == 998:
+                        if cardset.card_lut[c] < 9:
                             candidate_cards[cardset.card_lut[c]] = [c]                        
-                else:
-                    if cardset.card_lut[c] >= cardset.card_lut[last_card_id] or cardset.card_lut[c] >= 996:
-                        if cardset.card_lut[c] in candidate_cards.keys():
-                            candidate_cards[cardset.card_lut[c]] = candidate_cards[cardset.card_lut[c]] + [c]
-                        else:
-                            candidate_cards[cardset.card_lut[c]] = [c]
+                    else:
+                        if cardset.card_lut[c] >= cardset.card_lut[last_card_id] and cardset.card_lut[c] < 996:
+                            candidate_cards[cardset.card_lut[c]] = [c]                    
+            else:
+                for c in self.cards.hc():
+                    if cardset.card_lut[last_card_id] == 998:
+                        if cardset.card_lut[c] < 9 or cardset.card_lut[c] >= 996:
+                            if cardset.card_lut[c] in candidate_cards.keys():
+                                candidate_cards[cardset.card_lut[c]] = candidate_cards[cardset.card_lut[c]] + [c]
+                            else:
+                                candidate_cards[cardset.card_lut[c]] = [c]                        
+                    else:
+                        if cardset.card_lut[c] >= cardset.card_lut[last_card_id] or cardset.card_lut[c] >= 996:
+                            if cardset.card_lut[c] in candidate_cards.keys():
+                                candidate_cards[cardset.card_lut[c]] = candidate_cards[cardset.card_lut[c]] + [c]
+                            else:
+                                candidate_cards[cardset.card_lut[c]] = [c]
+
             for i in candidate_cards:
                 for j,k in enumerate(candidate_cards[i]):
                     moves.append(candidate_cards[i][0:j+1])
@@ -113,9 +124,16 @@ class player():
             print("Game finished. You won.")
             self.my_move(0, cardset)
         elif self.mvtype==move_type.UNKNOWN_TABLE_CARDS:
-            print("The available moves are: ", cardset.id2name(self.moves))
+            print("The available moves are: ", self.moves)
+
+            # insert strategy here to replace the user input
             mvid = int(input("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")) - 1
-            print("You chose card: ", cardset.id2name(self.moves[mvid]))
+
+            # random strategy
+            # print("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")
+            # mvid = self.random_strategy(self.moves) - 1
+
+            print("You chose card: ", self.moves[mvid])
             self.my_move(mvid, cardset)
             check = cardset.public_cards[-1]
             if cardset.card_lut[last_card_id] == 998:
@@ -124,7 +142,14 @@ class player():
                 valid = cardset.card_lut[check] >= cardset.card_lut[last_card_id] or cardset.card_lut[check] >= 996
         else:
             print("The available moves are: ", cardset.id2name(self.moves))
+
+            # # insert strategy here to replace the user input
             mvid = int(input("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")) - 1
+
+            # random strategy
+            # print("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")
+            # mvid = self.random_strategy(self.moves) - 1
+
             print("You chose card: ", cardset.id2name(self.moves[mvid]))
             self.my_move(mvid, cardset)
 
@@ -156,15 +181,18 @@ class player():
         print("Unknown table cards: ", ["*" for c in self.cards.utc()])       
 
 
+
+
 if __name__ == '__main__':
 
     poker_card = cardset()
     p1_cards, p2_cards, p3_cards, p4_cards = poker_card.init_shuffle()
-    # p1_cards.update_hc([])
-    # p1_cards.update_ktc([])
+    p1_cards.update_hc([1])
+    p1_cards.update_ktc([])
+    p1_cards.update_utc([])
     p1 = player('p1', p1_cards)
 
-    last = 25
+    last = 13
     print(poker_card.id2val(last))
 
 

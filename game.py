@@ -183,7 +183,7 @@ if __name__ == '__main__':
     print()
     print("GAME START!")
     while True:
-        time.sleep(2)
+        # time.sleep(2)
         print()
         print()
         print("***************************************************************")
