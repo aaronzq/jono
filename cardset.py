@@ -1,5 +1,6 @@
 from typing import Tuple, List, Union
 import random
+import csv
 
 class card_in_player():
 
@@ -59,7 +60,7 @@ class card_in_player():
 
 class cardset():
 
-    def __init__(self) -> None:
+    def __init__(self, card_map_file='card_map.csv') -> None:
         self.card_ids = list(range(53))
         # 2 3 ... K A, and 4 types
         vals = list(range(2,15))
@@ -69,6 +70,12 @@ class cardset():
         vals[8] = 999
         # print(vals)
         self.card_lut = dict(zip(self.card_ids, [0]+vals*4))
+        self.card_map = dict()
+
+        with open(card_map_file, newline='', encoding='utf-8-sig') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                self.card_map[int(row[0])] = row[1] + " " + row[2]
 
         self.public_cards = []
         # print(self.card_lut)
@@ -100,6 +107,15 @@ class cardset():
             return [self.card_lut[c] if type(c)==int else [self.card_lut[cc] for cc in c] for c in card_ids]
         else:
             return None
+    
+    def id2name(self, card_ids):
+
+        if type(card_ids)==int:
+            return self.card_map[card_ids]
+        elif type(card_ids)==list:
+            return [self.card_map[c] if type(c)==int else [self.card_map[cc] for cc in c] for c in card_ids]
+        else:
+            return None       
 
 
 
@@ -107,7 +123,10 @@ if __name__ == '__main__':
 
     cards = cardset()
 
-    print(cards.id2val([2,34,1]))
+    print(cards.id2val([[2],[34],[1]]))
+    print(cards.id2name([[2],34,[1]]))
+
+
     # cards.init_shuffle()
     # print(cards.card_lut[13])
     # print(cards.shuffle('a','b'))

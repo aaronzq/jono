@@ -89,7 +89,7 @@ class player():
             c = utc_temp[-self.moves[move_id][0]-1]
             utc_temp.remove(c)
             cardset.add_public_cards(c)
-            print("The picked unknown table card is: ", c)
+            print("The picked unknown table card is: ", cardset.id2name(c))
             self.cards.update_utc(utc_temp)
         else:
             c = self.moves[move_id][0]
@@ -113,9 +113,9 @@ class player():
             print("Game finished. You won.")
             self.my_move(0, cardset)
         elif self.mvtype==move_type.UNKNOWN_TABLE_CARDS:
-            print("The available moves are: ", self.moves)
+            print("The available moves are: ", cardset.id2name(self.moves))
             mvid = int(input("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")) - 1
-            print("You chose card: ", self.moves[mvid])
+            print("You chose card: ", cardset.id2name(self.moves[mvid]))
             self.my_move(mvid, cardset)
             check = cardset.public_cards[-1]
             if cardset.card_lut[last_card_id] == 998:
@@ -123,9 +123,9 @@ class player():
             else:
                 valid = cardset.card_lut[check] >= cardset.card_lut[last_card_id] or cardset.card_lut[check] >= 996
         else:
-            print("The available moves are: ", self.moves)
+            print("The available moves are: ", cardset.id2name(self.moves))
             mvid = int(input("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")) - 1
-            print("You chose card: ", self.moves[mvid])
+            print("You chose card: ", cardset.id2name(self.moves[mvid]))
             self.my_move(mvid, cardset)
 
         return valid
@@ -151,8 +151,8 @@ class player():
     def view_card(self, cardset:cardset):
 
         print("Viewing player: ", self.name, "'s cards:")
-        print("Hand cards: ", self.cards.hc())
-        print("Known table cards: ", self.cards.ktc())
+        print("Hand cards: ", cardset.id2name(self.cards.hc()))
+        print("Known table cards: ", cardset.id2name(self.cards.ktc()))
         print("Unknown table cards: ", ["*" for c in self.cards.utc()])       
 
 
