@@ -184,6 +184,8 @@ if __name__ == '__main__':
     print("GAME START!")
     while True:
         time.sleep(2)
+        print()
+        print()
         print("***************************************************************")
         print("The game is in iter# ", iteration)
         print("Player ", game.playing_player_id ," is playing...")
