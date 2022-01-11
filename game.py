@@ -196,3 +196,43 @@ if __name__ == '__main__':
 
 
     print("Game finished. The winner is player ", game.playing_player_id)
+
+
+    # N_try = 10000
+    # iteration_count = []
+    # win_count = {0:0, 1:0, 2:0, 3:0}
+    # for nt in range(N_try):
+    #     game = gameplay()
+    #     iteration = 0
+    #     print()
+    #     print("GAME START!")
+    #     while True:
+    #         # time.sleep(2)
+    #         print()
+    #         print()
+    #         print("***************************************************************")
+    #         print("The game is in iter# ", iteration)
+    #         print("Player ", game.playing_player_id ," is playing...")
+    #         print("The last card is ", game.poker_card.id2name(game.last_card_id))
+    #         if game.step():
+    #             break
+    #         iteration = iteration+1
+    #     print("Game finished. The winner is player ", game.playing_player_id)
+
+    #     iteration_count.append(iteration)
+    #     win_count[game.playing_player_id] = win_count[game.playing_player_id] + 1
+    
+    # print(iteration_count)
+    # print(win_count)
+
+    # import matplotlib.pyplot as plt
+
+    # fig, ax = plt.subplots()
+    # ax.hist(iteration_count, bins=20)
+
+    # ax.set(xlabel='iterations', ylabel='count',
+    #     title='iteration of each game')
+    # # ax.grid()
+
+    # # fig.savefig("test.png")
+    # plt.show()
