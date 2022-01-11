@@ -2,7 +2,7 @@
 These codes are intended to emulate the card game we modified for fun ( in a 2021 Las Vegas trip **lol** ). I already forgot the name of the original game every our modification is based on. But it's pretty much similar
 to UNO. We pair each two players so the game becomes a little bit more strategy (sort of, just a little), imitating Bridge. 
 
-With these codes we wanna try to find the flaws in the game balance. Hopefulling we can modify more to make it better. 
+With these codes we wanna try to find the flaws in the game balance. Hopefully we can modify more to make it better. 
 
 ## 规则
 一副去掉两张Joker的扑克牌，52张
