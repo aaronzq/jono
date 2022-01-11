@@ -29,3 +29,19 @@ Run
 `
 python game.py
 `
+
+## Log
+
+1. Totally random choice from all available moves
+
+Winnings: 
+
+| Player 0 | Player 1 | Player 2 | Player 3 |
+| -------- | -------- | -------- | -------- |
+| 234      | 263      | 246      | 257      |
+
+Iterations: 
+
+<!-- ![iterations](./log/totally_random/iterations.png) -->
+
+<img src="./log/totally_random/iterations.png" alt="iterations" width="300"/>
