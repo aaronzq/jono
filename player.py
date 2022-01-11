@@ -9,13 +9,26 @@ class move_type(Enum):
     HAND_CARDS = 3
     WINNING = 4
 
+class strategy_name(Enum):
+    USER_INPUT = 1
+    TOTALLY_RANDOM = 2
+    ST1 = 3
+
 class player():
 
-    def __init__(self, player_name:str, cards:card_in_player) -> None:
+    def __init__(self, player_name:str, cards:card_in_player, stgy:strategy_name=strategy_name.TOTALLY_RANDOM) -> None:
         self.name = player_name
         self.cards = cards
         self.moves = []
         self.mvtype = move_type.HAND_CARDS
+        if stgy == strategy_name.USER_INPUT:
+            self.stgy_func = self.user_input_strategy
+        elif stgy == strategy_name.TOTALLY_RANDOM:
+            self.stgy_func = self.random_strategy
+        else:
+            #  todo: add more strategy
+            pass
+
 
     def available_moves(self, last_card_id:int, cardset:cardset) -> None:
         candidate_cards = dict()
@@ -126,29 +139,26 @@ class player():
         elif self.mvtype==move_type.UNKNOWN_TABLE_CARDS:
             print("The available moves are: ", self.moves)
 
-            # insert strategy here to replace the user input
-            # mvid = int(input("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")) - 1
-
-            # random strategy
-            print("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")
-            mvid = self.random_strategy(self.moves) - 1
+            mvid = self.stgy_func(cardset)
 
             print("You chose card: ", self.moves[mvid])
             self.my_move(mvid, cardset)
             check = cardset.public_cards[-1]
-            if cardset.card_lut[last_card_id] == 998:
-                valid = cardset.card_lut[check] < 9 or cardset.card_lut[check] >= 996                     
+
+            if self.cards.have_utc():
+                if cardset.card_lut[last_card_id] == 998:
+                    valid = cardset.card_lut[check] < 9 or cardset.card_lut[check] >= 996                     
+                else:
+                    valid = cardset.card_lut[check] >= cardset.card_lut[last_card_id] or cardset.card_lut[check] >= 996
             else:
-                valid = cardset.card_lut[check] >= cardset.card_lut[last_card_id] or cardset.card_lut[check] >= 996
+                if cardset.card_lut[last_card_id] == 998:
+                    valid = cardset.card_lut[check] < 9                  
+                else:
+                    valid = cardset.card_lut[check] >= cardset.card_lut[last_card_id] and cardset.card_lut[check] < 996                
         else:
             print("The available moves are: ", cardset.id2name(self.moves))
 
-            # # insert strategy here to replace the user input
-            # mvid = int(input("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")) - 1
-
-            # random strategy
-            print("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")
-            mvid = self.random_strategy(self.moves) - 1
+            mvid = self.stgy_func(cardset)
 
             print("You chose card: ", cardset.id2name(self.moves[mvid]))
             self.my_move(mvid, cardset)
@@ -180,9 +190,15 @@ class player():
         print("Known table cards: ", cardset.id2name(self.cards.ktc()))
         print("Unknown table cards: ", ["*" for c in self.cards.utc()])       
 
-    def random_strategy(self, mvs:List[List[int]]) -> int:
 
-        return random.randint(1,len(mvs))
+    def user_input_strategy(self, cardset:cardset) -> int:
+
+        return int(input("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")) - 1
+
+    def random_strategy(self, cardset:cardset) -> int:
+
+        print("Which move do you wanna choose, from 1 to "+str(len(self.moves))+": ")
+        return random.randint(1,len(self.moves)) - 1
 
 
 if __name__ == '__main__':
